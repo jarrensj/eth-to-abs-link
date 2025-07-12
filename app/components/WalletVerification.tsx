@@ -10,31 +10,31 @@ interface WalletVerificationProps {
 const WalletVerification = ({ connectedAddress }: WalletVerificationProps) => {
   const [abstractAddress, setAbstractAddress] = useState('')
   const [isVerifying, setIsVerifying] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [verificationComplete, setVerificationComplete] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   
   const { signMessage, isPending: isSigningPending, error: signError } = useSignMessage({
     mutation: {
       onSuccess: (signature) => {
-        console.log('Signature:', signature)
-        setVerificationComplete(true)
-        setIsVerifying(false)
-        // TODO
         handleFormSubmission(signature)
       },
       onError: (error) => {
         console.error('Signing failed:', error)
         setIsVerifying(false)
+        setError('Failed to sign message')
       }
     }
   })
 
   const handleVerifyOwnership = async () => {
     if (!abstractAddress.trim()) {
-      alert('Please enter your abstract wallet address')
+      setError('Please enter your abstract wallet address')
       return
     }
     
     setIsVerifying(true)
+    setError(null)
     
     // Create a message to sign for verification
     const message = `Verify ownership of abstract wallet: ${abstractAddress}\nConnected wallet: ${connectedAddress}\nTimestamp: ${Date.now()}`
@@ -44,39 +44,57 @@ const WalletVerification = ({ connectedAddress }: WalletVerificationProps) => {
     } catch (error) {
       console.error('Failed to sign message:', error)
       setIsVerifying(false)
+      setError('Failed to sign message')
     }
   }
 
   const handleFormSubmission = async (signature: string) => {
-    // This is where you would submit the form data to your backend
-    const formData = {
-      connectedWallet: connectedAddress,
-      abstractWallet: abstractAddress,
-      signature: signature,
-      timestamp: Date.now()
+    try {
+      setIsSubmitting(true)
+      setError(null)
+
+      const response = await fetch('/api/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          connectedWallet: connectedAddress,
+          abstractWallet: abstractAddress,
+          signature: signature
+        })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => null);
+        throw new Error(errorData?.error || `HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      
+      setVerificationComplete(true);
+    } catch (error) {
+      console.error('Form submission failed:', error);
+      setError(error instanceof Error ? error.message : 'Failed to submit verification');
+      setVerificationComplete(false);
+    } finally {
+      setIsVerifying(false);
+      setIsSubmitting(false);
     }
-    
-    console.log('Form data to submit:', formData)
-    
-    // Example API call (replace with your actual endpoint)
-    // try {
-    //   const response = await fetch('/api/verify-wallet', {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify(formData)
-    //   })
-    //   const result = await response.json()
-    //   console.log('Verification result:', result)
-    // } catch (error) {
-    //   console.error('Form submission failed:', error)
-    // }
   }
 
   const resetForm = () => {
     setAbstractAddress('')
     setVerificationComplete(false)
     setIsVerifying(false)
+    setIsSubmitting(false)
+    setError(null)
   }
+
+  // Separate disabled states for input and button
+  const isInputDisabled = isVerifying || isSigningPending || isSubmitting
+  const isButtonDisabled = isInputDisabled || !abstractAddress.trim()
 
   return (
     <div className="w-full space-y-4 p-6 border rounded-lg bg-gray-50">
@@ -97,21 +115,22 @@ const WalletVerification = ({ connectedAddress }: WalletVerificationProps) => {
               onChange={(e) => setAbstractAddress(e.target.value)}
               placeholder="Paste your abstract wallet address here..."
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              disabled={isVerifying || isSigningPending}
+              disabled={isInputDisabled}
             />
           </div>
           
           <button
             onClick={handleVerifyOwnership}
-            disabled={isVerifying || isSigningPending || !abstractAddress.trim()}
+            disabled={isButtonDisabled}
             className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
-            {isVerifying || isSigningPending ? 'Verifying...' : 'Verify Ownership & Submit'}
+            {isVerifying || isSigningPending ? 'Verifying...' : 
+             isSubmitting ? 'Submitting...' : 'Verify Ownership & Submit'}
           </button>
           
-          {signError && (
+          {(error || signError) && (
             <p className="text-sm text-red-600">
-              Error: {signError.message}
+              Error: {error || signError?.message}
             </p>
           )}
         </>
