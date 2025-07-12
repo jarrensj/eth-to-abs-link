@@ -38,3 +38,50 @@ body {
   background: linear-gradient(135deg, #fffb00, #00fff7);
   border-radius: 6px;
 }
+
+.bg-gray-50 {
+  background-color: #f8f9fa !important;
+}
+input[type="text"], input[type="email"], input[type="password"], textarea {
+  background-color: #f5f6fa !important;
+  color: #232136 !important;
+  border: 1px solid #444 !important;
+  box-shadow: none !important;
+  font-size: 0.55rem !important;
+}
+input[type="text"]::placeholder, input[type="email"]::placeholder, input[type="password"]::placeholder, textarea::placeholder {
+  color: #6b7280 !important;
+  opacity: 1;
+  font-size: 0.55rem !important;
+}
+
+.btn-gradient {
+  background: linear-gradient(90deg, #ff69b4, #a78bfa, #ff69b4);
+  background-size: 200% 100%;
+  background-position: left;
+  color: #fff !important;
+  border: none;
+  transition: background-position 0.8s cubic-bezier(.4,1.6,.6,1), box-shadow 0.2s;
+  box-shadow: 0 2px 12px #ff69b488;
+  animation: gradient-move 2.5s linear infinite;
+  cursor: pointer;
+}
+@keyframes gradient-move {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+.btn-gradient:hover, .btn-gradient:focus {
+  background-position: right;
+  box-shadow: 0 4px 24px #a78bfa88;
+}
+.btn-gradient:disabled, .btn-gradient[disabled] {
+  background: #e5e7eb !important;
+  color: #bdbdbd !important;
+  box-shadow: none !important;
+  cursor: not-allowed !important;
+  animation: none !important;
+}
