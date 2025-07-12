@@ -1,0 +1,62 @@
+.logo {
+  font-size: 3.5rem;
+  font-family: 'Pacifico', cursive, 'Press Start 2P', monospace;
+  color: #ff69b4;
+  text-shadow:
+    0 0 2px #ff69b4,
+    0 0 4px #ff69b4,
+    0 0 8px #ff00de,
+    1px 1px 0 #222,
+    -1px -1px 0 #222;
+  -webkit-background-clip: initial;
+  -webkit-text-fill-color: initial;
+  letter-spacing: 0.12em;
+  padding: 0.7em 1.2em;
+  border-radius: 10px;
+  display: inline-block;
+  margin: 1.2em auto 1em auto;
+  text-align: center;
+  image-rendering: pixelated;
+  background: transparent;
+}
+.logo span {
+  color: inherit;
+  text-shadow: inherit;
+  -webkit-background-clip: initial;
+  -webkit-text-fill-color: initial;
+  background: transparent;
+}
+.flicker {
+  display: inline-block;
+  animation: flicker 2s infinite;
+}
+@keyframes flicker {
+  0%, 92%, 100% {
+    opacity: 1;
+    filter: none;
+  }
+  93% {
+    opacity: 0.3;
+    filter: brightness(2) blur(1px);
+  }
+  94%, 96% {
+    opacity: 0.7;
+    filter: brightness(0.5) blur(0.5px);
+  }
+  95% {
+    opacity: 0.2;
+    filter: brightness(2.5) blur(2px);
+  }
+  97% {
+    opacity: 0.5;
+    filter: brightness(1.2) blur(0.5px);
+  }
+  98% {
+    opacity: 0.8;
+    filter: brightness(0.8) blur(0.2px);
+  }
+  99% {
+    opacity: 0.4;
+    filter: brightness(1.5) blur(1px);
+  }
+} 
