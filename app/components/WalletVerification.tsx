@@ -97,7 +97,7 @@ const WalletVerification = ({ connectedAddress }: WalletVerificationProps) => {
   const isButtonDisabled = isInputDisabled || !abstractAddress.trim()
 
   return (
-    <div className="w-full space-y-4 p-6 border rounded-lg bg-gray-50">
+    <div className="w-full space-y-4 p-6 mt-16 border rounded-lg bg-gray-50">
       <div className="text-sm text-green-600 mb-4">
         ✅ Wallet connected: {connectedAddress?.slice(0, 6)}...{connectedAddress?.slice(-4)}
       </div>
