@@ -6,7 +6,9 @@ export default function Home() {
     <div className="min-h-screen p-8 flex items-center justify-center">
       <main className="container mx-auto text-center">
         <NeonSign />
-        <ConnectWallet />
+        <div className="my-6">
+          <ConnectWallet />
+        </div>
       </main>
     </div>
   );
