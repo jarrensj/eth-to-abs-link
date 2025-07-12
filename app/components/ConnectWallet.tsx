@@ -14,7 +14,7 @@ const ConnectWallet = () => {
   }, [])
 
   return (
-    <div className="flex flex-col items-center justify-center space-y-4 max-w-md mx-auto">
+    <div className="flex flex-col items-center justify-center space-y-4 mb-10 max-w-md mx-auto">
       {isClient && 
         <>
           <ConnectKitButton />

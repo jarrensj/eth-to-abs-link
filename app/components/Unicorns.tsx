@@ -11,12 +11,14 @@ const unicornImages = [
   '/unicorns/unicorn7.png',
 ];
 
+type Jumper = { id: string; img: string; side: string };
 // For jumping unicorns
 const getRandomUnicorn = () => unicornImages[Math.floor(Math.random() * unicornImages.length)];
 const getRandomSide = () => (Math.random() > 0.5 ? 'left' : 'right');
 
 const Unicorns = () => {
-  const [jumpers, setJumpers] = useState([]);
+  type Jumper = { id: string; img: string; side: string };
+  const [jumpers, setJumpers] = useState<Jumper[]>([]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -89,19 +91,31 @@ const Unicorns = () => {
       <style>{`
         @keyframes unicorn-jump-left {
           0% { left: 0; bottom: 0; opacity: 0; }
+          1% { opacity: 0; }
+          4% { opacity: 0; }
+          5% { opacity: 0; }
           10% { opacity: 1; }
           40% { left: 20vw; bottom: 30vh; }
           60% { left: 30vw; bottom: 40vh; }
           80% { left: 40vw; bottom: 10vh; opacity: 1; }
-          100% { left: 60vw; bottom: 0; opacity: 0; }
+          95% { opacity: 0; }
+          96% { opacity: 0; }
+          99% { opacity: 0; }
+          100% { left: 0; bottom: 0; opacity: 0; }
         }
         @keyframes unicorn-jump-right {
           0% { right: 0; bottom: 0; opacity: 0; }
+          1% { opacity: 0; }
+          4% { opacity: 0; }
+          5% { opacity: 0; }
           10% { opacity: 1; }
           40% { right: 20vw; bottom: 30vh; }
           60% { right: 30vw; bottom: 40vh; }
           80% { right: 40vw; bottom: 10vh; opacity: 1; }
-          100% { right: 60vw; bottom: 0; opacity: 0; }
+          95% { opacity: 0; }
+          96% { opacity: 0; }
+          99% { opacity: 0; }
+          100% { right: 0; bottom: 0; opacity: 0; }
         }
       `}</style>
     </>
