@@ -6,6 +6,7 @@ import { Web3Provider } from "./Web3Provider";
 import PixelBackground from "./components/PixelBackground";
 import Unicorns from "./components/Unicorns";
 import ParticleBackground from "./components/ParticleBackground";
+import { Analytics } from "@vercel/analytics/next"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -43,6 +44,7 @@ export default function RootLayout({
           <PixelBackground />
           <Unicorns />
           {children}
+          <Analytics />
         </body>
       </Web3Provider>
     </html>
