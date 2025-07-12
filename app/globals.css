@@ -88,17 +88,17 @@ input[type="text"]::placeholder, input[type="email"]::placeholder, input[type="p
 
 /* Ensure ConnectKitButton is visible in both light and dark mode */
 .connectkit-connectbutton, .connectkit-connectbutton__button {
-  background: #232136 !important;
+  background: #ff69b4 !important;
   color: #fff !important;
-  border: 2px solid #a78bfa !important;
+  border: 2px solid #ff69b4 !important;
   font-weight: bold;
-  box-shadow: 0 2px 12px #a78bfa44;
+  box-shadow: 0 2px 12px #ff69b488;
 }
 @media (prefers-color-scheme: dark) {
   .connectkit-connectbutton, .connectkit-connectbutton__button {
-    background: #fff !important;
-    color: #232136 !important;
+    background: #ff69b4 !important;
+    color: #fff !important;
     border: 2px solid #ff69b4 !important;
-    box-shadow: 0 2px 12px #ff69b444;
+    box-shadow: 0 2px 12px #ff69b488;
   }
 }

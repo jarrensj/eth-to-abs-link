@@ -23,7 +23,12 @@ export const Web3Provider: React.FC<{ children: ReactNode }> = ({ children }) =>
     return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
-        <ConnectKitProvider>{children}</ConnectKitProvider>
+        <ConnectKitProvider customTheme={{
+          '--ck-primary-button-background': '#ff69b4',
+          '--ck-primary-button-hover-background': '#ff85c2',
+          '--ck-primary-button-text': '#fff',
+          '--ck-primary-button-border': '#ff69b4',
+        }}>{children}</ConnectKitProvider>
       </QueryClientProvider>
     </WagmiProvider>
   );
